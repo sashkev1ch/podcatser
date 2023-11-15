@@ -24,7 +24,7 @@ class Episode:
         delta = datetime.now(tz=self.publish_date.tzinfo) - self.publish_date
         return delta.days <= 14
 
-    def download(self):
+    def download(self) -> None:
         with urlopen(self.link) as response:
             with open(self.local_path, 'wb') as out_file:
                 copyfileobj(response, out_file)

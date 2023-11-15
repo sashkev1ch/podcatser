@@ -16,10 +16,10 @@ class Channel:
     def __str__(self):
         return str(self.local_path)
 
-    def create_channel_directory(self):
+    def create_channel_directory(self) -> None:
         self.local_path.mkdir(parents=True, exist_ok=True)
 
-    def get_episodes(self):
+    def get_episodes(self) -> None:
         for episode in self.episodes:
             if not episode.exist and episode.actual:
                 print(f"Download {episode}")
