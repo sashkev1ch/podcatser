@@ -21,8 +21,7 @@ def prepare_channel_library(
 
     for item in items:
         episode_title = item.title.content.replace(" ", "_")
-        file_type = item.enclosure.attributes['type'].split('/')[1]
-        file_name = f"{episode_title}.{file_type}"
+        file_name = f"{episode_title}.mp3"
 
         episodes.append(
             Episode(
