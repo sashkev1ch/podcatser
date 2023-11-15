@@ -14,7 +14,7 @@ def prepare_channel_library(
     rss = Parser.parse(response.text)
 
     channel_name = rss.channel.title.content.replace(" ", "_")
-    channel_dir = project_path.joinpath(f"data/{channel_name}")
+    channel_dir = project_path.joinpath(f"downloads/{channel_name}")
 
     items = [item for item in rss.channel.items]
     episodes = []

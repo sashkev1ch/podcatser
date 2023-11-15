@@ -12,6 +12,7 @@ build/
 develop-eggs/
 dist/
 downloads/
+config/config.yml
 eggs/
 .eggs/
 lib64/
