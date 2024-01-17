@@ -26,5 +26,5 @@ class Episode:
 
     def download(self) -> None:
         with urlopen(self.link) as response:
-            with open(self.local_path, 'wb') as out_file:
+            with open(self.local_path, "wb") as out_file:
                 copyfileobj(response, out_file)

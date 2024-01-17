@@ -6,10 +6,7 @@ from library.Episode import Episode
 from library.Channel import Channel
 
 
-def prepare_channel_library(
-    project_path: Path,
-    channel_rss_url: str
-) -> None:
+def prepare_channel_library(project_path: Path, channel_rss_url: str) -> None:
     response = get(channel_rss_url)
     rss = Parser.parse(response.text)
 
@@ -26,16 +23,12 @@ def prepare_channel_library(
         episodes.append(
             Episode(
                 name=file_name,
-                link=item.enclosure.attributes['url'],
+                link=item.enclosure.attributes["url"],
                 publish_date=get_datetime(item.pub_date.content),
-                local_path=channel_dir.joinpath(file_name)
+                local_path=channel_dir.joinpath(file_name),
             )
         )
 
-    channel = Channel(
-        name=channel_name,
-        local_path=channel_dir,
-        episodes=episodes
-    )
+    channel = Channel(name=channel_name, local_path=channel_dir, episodes=episodes)
 
     channel.get_episodes()
