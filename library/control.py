@@ -17,7 +17,7 @@ def prepare_channel_library(project_path: Path, channel_rss_url: str) -> None:
     episodes = []
 
     for item in items:
-        episode_title = item.title.content.replace(" ", "_")
+        episode_title = item.title.content.replace(" ", "_").replace("/", "_")
         file_name = f"{episode_title}.mp3"
 
         episodes.append(
