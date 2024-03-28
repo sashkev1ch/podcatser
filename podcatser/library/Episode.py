@@ -22,7 +22,7 @@ class Episode:
     @property
     def actual(self) -> bool:
         delta = datetime.now(tz=self.publish_date.tzinfo) - self.publish_date
-        return delta.days <= 14
+        return delta.days <= 60
 
     def download(self) -> None:
         with urlopen(self.link) as response:

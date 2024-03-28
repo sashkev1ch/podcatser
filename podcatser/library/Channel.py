@@ -1,7 +1,7 @@
 from pathlib import Path
 from dataclasses import dataclass
 from typing import List
-from library.Episode import Episode
+from podcatser.library.Episode import Episode
 
 
 @dataclass

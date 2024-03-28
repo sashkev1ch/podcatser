@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "podcatser"
+version = "0.1.0"
+description = ""
+authors = ["vxndr <sashkevich23@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+start = "podcatser.scripts.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pyyaml = "^6.0.1"
+python-dateutil = "^2.9.0.post0"
+rss-parser = "^2.0.0"
+pydantic = "^2.6.4"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.3.0"
+pytest = "^8.1.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

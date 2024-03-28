@@ -1,14 +1,14 @@
 from pathlib import Path
 from requests import get
-from rss_parser import Parser
-from library.utils import get_datetime
-from library.Episode import Episode
-from library.Channel import Channel
+from rss_parser import RSSParser
+from podcatser.library.utils import get_datetime
+from podcatser.library.Episode import Episode
+from podcatser.library.Channel import Channel
 
 
 def prepare_channel_library(project_path: Path, channel_rss_url: str) -> None:
     response = get(channel_rss_url)
-    rss = Parser.parse(response.text)
+    rss = RSSParser.parse(response.text)
 
     channel_name = rss.channel.title.content.replace(" ", "_")
     channel_dir = project_path.joinpath(f"downloads/{channel_name}")
