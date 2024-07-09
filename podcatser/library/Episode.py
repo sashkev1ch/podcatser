@@ -11,6 +11,7 @@ class Episode:
     link: str
     publish_date: datetime
     local_path: Path
+    days_of_actual: int = 30
 
     def __str__(self):
         return f"episode: {self.name}, published: {self.publish_date}"
@@ -22,7 +23,7 @@ class Episode:
     @property
     def actual(self) -> bool:
         delta = datetime.now(tz=self.publish_date.tzinfo) - self.publish_date
-        return delta.days <= 60
+        return delta.days <= self.days_of_actual
 
     def download(self) -> None:
         with urlopen(self.link) as response:
