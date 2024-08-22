@@ -1,8 +1,9 @@
 from pathlib import Path
 from datetime import datetime
 from dataclasses import dataclass
-from urllib.request import urlopen
-from shutil import copyfileobj
+import asyncio as aio
+import aiofile
+import aiohttp
 
 
 @dataclass
@@ -11,7 +12,7 @@ class Episode:
     link: str
     publish_date: datetime
     local_path: Path
-    days_of_actual: int = 30
+    days_of_actual: int = 45
 
     def __str__(self):
         return f"episode: {self.name}, published: {self.publish_date}"
@@ -25,7 +26,17 @@ class Episode:
         delta = datetime.now(tz=self.publish_date.tzinfo) - self.publish_date
         return delta.days <= self.days_of_actual
 
-    def download(self) -> None:
-        with urlopen(self.link) as response:
-            with open(self.local_path, "wb") as out_file:
-                copyfileobj(response, out_file)
+    async def download(
+        self, session: aiohttp.ClientSession, semaphore: aio.BoundedSemaphore
+    ):
+        async with semaphore:
+            async with session.get(self.link) as resp:
+                print(f"{datetime.now().strftime('%H:%M:%S')} response to {self.link}")
+                assert resp.status == 200
+                data = await resp.read()
+
+        async with aiofile.async_open(self.local_path, "wb") as outfile:
+            print(
+                f"{datetime.now().strftime('%H:%M:%S')} save {self.name} episode to {self.local_path}"
+            )
+            await outfile.write(data)

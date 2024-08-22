@@ -10,7 +10,7 @@ def get_tz_info(date_string: str) -> Optional[Dict[str, int]]:
     for tz_name in possible_tzs:
         position = date_string.find(tz_name)
         if position > 0:
-            if search("[A-Z]", date_string[position + len(tz_name):]):
+            if search("[A-Z]", date_string[position + len(tz_name) :]):
                 continue
             return {tz_name: TIMEZONE_INFO[tz_name]}
 

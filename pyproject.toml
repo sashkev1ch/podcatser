@@ -14,7 +14,9 @@ pyyaml = "^6.0.1"
 python-dateutil = "^2.9.0.post0"
 rss-parser = "^2.0.0"
 pydantic = "^2.6.4"
-requests = "^2.31.0"
+aiohttp = "^3.10.5"
+aiofile = "^3.8.8"
+requests = "^2.32.3"
 
 
 [tool.poetry.group.dev.dependencies]

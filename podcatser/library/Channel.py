@@ -2,6 +2,9 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import List
 from podcatser.library.Episode import Episode
+import asyncio as aio
+import aiofile
+import aiohttp
 
 
 @dataclass
@@ -19,8 +22,12 @@ class Channel:
     def create_channel_directory(self) -> None:
         self.local_path.mkdir(parents=True, exist_ok=True)
 
-    def get_episodes(self) -> None:
-        for episode in self.episodes:
-            if not episode.exist and episode.actual:
-                print(f"Download {episode}")
-                episode.download()
+    async def get_episodes(self) -> None:
+        semaphore = aio.BoundedSemaphore(5)
+        async with aiohttp.ClientSession() as session:
+            tasks = [
+                episode.download(session, semaphore)
+                for episode in self.episodes
+                if not episode.exist and episode.actual
+            ]
+            await aio.gather(*tasks)

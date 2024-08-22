@@ -1,6 +1,7 @@
 from pathlib import Path
 from requests import get
 from rss_parser import RSSParser
+import asyncio as aio
 from podcatser.library.utils import get_datetime
 from podcatser.library.Episode import Episode
 from podcatser.library.Channel import Channel
@@ -13,10 +14,9 @@ def prepare_channel_library(project_path: Path, channel_rss_url: str) -> None:
     channel_name = rss.channel.title.content.replace(" ", "_")
     channel_dir = project_path.joinpath(f"downloads/{channel_name}")
 
-    items = [item for item in rss.channel.items]
     episodes = []
 
-    for item in items:
+    for item in rss.channel.items:
         episode_title = item.title.content.replace(" ", "_").replace("/", "_")
         file_name = f"{episode_title}.mp3"
 
@@ -31,4 +31,6 @@ def prepare_channel_library(project_path: Path, channel_rss_url: str) -> None:
 
     channel = Channel(name=channel_name, local_path=channel_dir, episodes=episodes)
 
-    channel.get_episodes()
+    loop = aio.get_event_loop()
+    loop.run_until_complete(channel.get_episodes())
+    loop.close()
