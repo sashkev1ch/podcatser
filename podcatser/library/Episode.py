@@ -30,10 +30,11 @@ class Episode:
         self, session: aiohttp.ClientSession, semaphore: aio.BoundedSemaphore
     ):
         async with semaphore:
-            async with session.get(self.link) as resp:
-                print(self)
+            async with session.get(self.link, timeout=3000) as resp:
+                print(f"{datetime.now().strftime('%H:%M:%S')}: download {self}")
                 assert resp.status == 200
                 data = await resp.read()
 
         async with aiofile.async_open(self.local_path, "wb") as outfile:
+            print(f"{datetime.now().strftime('%H:%M:%S')}: save {self}")
             await outfile.write(data)

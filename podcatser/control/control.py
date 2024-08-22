@@ -32,5 +32,9 @@ def prepare_channel_library(project_path: Path, channel_rss_url: str) -> None:
     channel = Channel(name=channel_name, local_path=channel_dir, episodes=episodes)
 
     loop = aio.get_event_loop()
+
+    if loop.is_closed():
+        loop = aio.new_event_loop()
+
     loop.run_until_complete(channel.get_episodes())
     loop.close()
