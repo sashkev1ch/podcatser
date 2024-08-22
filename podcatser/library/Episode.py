@@ -31,12 +31,9 @@ class Episode:
     ):
         async with semaphore:
             async with session.get(self.link) as resp:
-                print(f"{datetime.now().strftime('%H:%M:%S')} response to {self.link}")
+                print(self)
                 assert resp.status == 200
                 data = await resp.read()
 
         async with aiofile.async_open(self.local_path, "wb") as outfile:
-            print(
-                f"{datetime.now().strftime('%H:%M:%S')} save {self.name} episode to {self.local_path}"
-            )
             await outfile.write(data)

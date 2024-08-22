@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from typing import List
 from podcatser.library.Episode import Episode
 import asyncio as aio
-import aiofile
 import aiohttp
 
 

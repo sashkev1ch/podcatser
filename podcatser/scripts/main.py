@@ -1,6 +1,5 @@
 from pathlib import Path
 from yaml import load, FullLoader
-import asyncio as aio
 from podcatser.control.control import prepare_channel_library
 
 
